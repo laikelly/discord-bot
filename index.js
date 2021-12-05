@@ -19,24 +19,29 @@ client.on('ready', () => {
 
 client.on('message', async msg => {
     switch (msg.content) {
-        case "hi":
-            msg.reply("Welcome!");
-            break;
-        case "!dlrb":
-            const info = await getInfo('diliraba');
-            msg.channel.send(info);
-            break
-        case "!info":
-            const embed = new MessageEmbed()
+        case "!help":
+            const des = new MessageEmbed()
                 .setColor(`#bee2e7`)
-                .setDescription(`Please enter the name of the Actor / Actress you would like to search with their name seperated by a "+" sign (Ex: dilraba + dilmurat)`)
+                .setDescription(`Below are the list of commands and functionalities:
+                    !info - to retrieve Actor/Actress personal information`)
                 .setTitle(`AI - Bot`)
             msg.channel.send({
-                embeds: [embed]
+                embeds: [des]
+            });
+            break
+        case "!info":
+            const name = new MessageEmbed()
+                .setColor(`#bee2e7`)
+                .setDescription(`Please enter the name of the Actor / Actress you would like to search with their name separated by a "+" sign (Ex: dilraba+dilmurat)`)
+                .setTitle(`AI - Bot`)
+            msg.channel.send({
+                embeds: [name]
             }).then(function(message) {
                 let filter = (msg) => !msg.author.bot;
-                let options = {max:1}
-                let collector = msg.channel.createMessageCollector(filter,options)
+                let options = {
+                    max: 1
+                }
+                let collector = msg.channel.createMessageCollector(filter, options)
                 collector.on('collect', async (msg) => {
                     console.log(`Collected ${msg.content}`);
                     collector.stop();
@@ -55,7 +60,7 @@ client.on('message', async msg => {
 
 async function getInfo(name) {
     const res = await axios.get(`https://api.tvmaze.com/search/people?q=${name}`);
-    const embed = new MessageEmbed()
+    const info = new MessageEmbed()
         .setColor(`#bee2e7`)
         .setAuthor('Actor/Actress Personal Information')
         .setTitle(`${res.data[0].person.name}`)
@@ -66,7 +71,7 @@ async function getInfo(name) {
         .setThumbnail(`${res.data[0].person.image.medium}`)
         .setTimestamp()
     return {
-        embeds: [embed]
-    }; //image
+        embeds: [info]
+    };
 }
 client.login(process.env.TOKEN); //login bot using token
