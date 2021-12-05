@@ -14,6 +14,7 @@ This is a discord bot that returns information retrieved from the [TVmaze API](h
 <img width="690" alt="Screen Shot 2021-12-05 at 5 05 00 PM" src="https://user-images.githubusercontent.com/44072717/144765718-66a6eb7a-ae8c-4dcb-ae2a-ebdad595f360.png">
 
 Example:
+
 <img width="529" alt="Screen Shot 2021-12-05 at 5 05 08 PM" src="https://user-images.githubusercontent.com/44072717/144765720-1b38623b-9515-410a-9ee1-316fd59ac4b5.png">
 
 ## Resources
