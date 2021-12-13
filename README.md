@@ -15,7 +15,7 @@ This is a discord bot that returns information retrieved from the [TVmaze API](h
 
 ## Procedure
 ### Step 1: Setting up a Discord server
-* [Sign In](https://discord.com/login)/[Sign Up](https://discord.com/register) for a Discord account to begin. 
+* [Sign In](https://discord.com/login) or [Sign Up](https://discord.com/register) for a Discord account to begin. 
 * Click the plus icon on the left of the screen to create a new server.
 <img width="226" alt="Screen Shot 2021-12-12 at 11 50 56 PM" src="https://user-images.githubusercontent.com/44072717/145754473-f2007c82-2a3a-411b-ad1b-181933d5ca12.png">
 * Next, click "Create My Own" and input the name of the server.
