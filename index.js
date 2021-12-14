@@ -1,6 +1,5 @@
 require('dotenv').config(); //initialize dotenv
 const Discord = require('discord.js'); //import discord.js
-// const fetch = require('node-fetch'); //import axios
 const axios = require('axios'); //import axios
 
 const {
@@ -57,7 +56,8 @@ client.on('messageCreate', async msg => {
             });
             break
         case "!gif":
-            console.log(getGif("denglun"));
+            let gif = await getGif("diliraba");
+            msg.channel.send(gif);
             break
     }
 });
@@ -80,9 +80,9 @@ async function getInfo(name) {
 }
 
 async function getGif(name) {
-    const response = await axios.get(`https://g.tenor.com/v1/search?q=${name}&key=${process.env.TENORKEY}&limit=1`)
-    // const gif = Math.floor(Math.random() * response.results.length);
-    return response.results["0"];
+    const response = await axios.get(`https://g.tenor.com/v1/search?q=${name}&key=${process.env.TENORKEY}&ContentFilter=G`)
+    const index = Math.floor(Math.random() * response.data.results.length); //randomizes the gif
+    return response.data.results[index.toString()].media['0'].gif.url;
 
 }
 client.login(process.env.TOKEN); //login bot using token
