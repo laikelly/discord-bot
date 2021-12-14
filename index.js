@@ -1,7 +1,8 @@
 require('dotenv').config(); //initialize dotenv
 const Discord = require('discord.js'); //import discord.js
+// const fetch = require('node-fetch'); //import axios
 const axios = require('axios'); //import axios
-// const client = new Discord.Client(); //create new client
+
 const {
     MessageEmbed
 } = require('discord.js');
@@ -17,7 +18,7 @@ client.on('ready', () => {
     console.info(`Logged in as ${client.user.tag}!`);
 });
 
-client.on('message', async msg => {
+client.on('messageCreate', async msg => {
     switch (msg.content) {
         case "!help":
             const des = new MessageEmbed()
@@ -55,6 +56,9 @@ client.on('message', async msg => {
                 });
             });
             break
+        case "!gif":
+            console.log(getGif("denglun"));
+            break
     }
 });
 
@@ -73,5 +77,12 @@ async function getInfo(name) {
     return {
         embeds: [info]
     };
+}
+
+async function getGif(name) {
+    const response = await axios.get(`https://g.tenor.com/v1/search?q=${name}&key=${process.env.TENORKEY}&limit=1`)
+    // const gif = Math.floor(Math.random() * response.results.length);
+    return response.results["0"];
+
 }
 client.login(process.env.TOKEN); //login bot using token
