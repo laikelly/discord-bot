@@ -18,47 +18,31 @@ client.on('ready', () => {
 });
 
 client.on('messageCreate', async msg => {
-    switch (msg.content) {
-        case "!help":
-            const des = new MessageEmbed()
-                .setColor(`#bee2e7`)
-                .setDescription(`Below are the list of commands and functionalities:
-                    !info - to retrieve Actor/Actress personal information`)
-                .setTitle(`AI - Bot`)
-            msg.channel.send({
-                embeds: [des]
-            });
-            break
-        case "!info":
-            const name = new MessageEmbed()
-                .setColor(`#bee2e7`)
-                .setDescription(`Please enter the name of the Actor / Actress you would like to search with their name separated by a "+" sign (Ex: dilraba+dilmurat)`)
-                .setTitle(`AI - Bot`)
-            msg.channel.send({
-                embeds: [name]
-            }).then(function(message) {
-                let filter = (msg) => !msg.author.bot;
-                let options = {
-                    max: 1
-                }
-                let collector = msg.channel.createMessageCollector(filter, options)
-                collector.on('collect', async (msg) => {
-                    console.log(`Collected ${msg.content}`);
-                    collector.stop();
-                    const info = await getInfo(`${msg.content}`);
-                    msg.channel.send(info);
+    if (msg.content === "!help") {
+        const des = new MessageEmbed()
+            .setColor(`#bee2e7`)
+            .setDescription(`Below are the list of commands and functionalities:
+                        *Format: ![command] [name of Actor/Actress separated by spaces]*
 
-                });
+                        **!info** - returns Actor/Actress personal information
+                        **!gif** - returns a random gif of the Actor/Actress`)
+            .setTitle(`AI - Bot`)
+        msg.channel.send({embeds: [des]});
+    }
+    let tokens = msg.content.split(" ");
+    if (tokens[0] === "!info") {
+        let keywords = " ";
+        if (tokens.length > 1) {
+            keywords = tokens.slice(1, tokens.length).join("+");
+            msg.channel.send(await getInfo(keywords));
+        }
 
-                collector.on('end', (collected) => {
-                    console.log(`Collected ${collected.size} items`);
-                });
-            });
-            break
-        case "!gif":
-            let gif = await getGif("diliraba");
-            msg.channel.send(gif);
-            break
+    } else if (tokens[0] === "!gif") {
+        let keywords = " ";
+        if (tokens.length > 1) {
+            keywords = tokens.slice(1, tokens.length).join(" ");
+            msg.channel.send(await getGif(keywords));
+        }
     }
 });
 
@@ -80,7 +64,7 @@ async function getInfo(name) {
 }
 
 async function getGif(name) {
-    const response = await axios.get(`https://g.tenor.com/v1/search?q=${name}&key=${process.env.TENORKEY}&ContentFilter=G`)
+    const response = await axios.get(`https://g.tenor.com/v1/search?q=${name}&key=${process.env.TENORKEY}&contentfilter=high`)
     const index = Math.floor(Math.random() * response.data.results.length); //randomizes the gif
     return response.data.results[index.toString()].media['0'].gif.url;
 
