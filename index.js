@@ -9,7 +9,7 @@ const {Client,Intents} = require('discord.js'); //create discord client
 const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});
 
 client.on('ready', () => {
-    console.info(`Logged in as ${client.user.tag}!`);
+    console.info(`The client is ready!`);
 });
 
 client.on('messageCreate', async msg => {
@@ -129,4 +129,3 @@ async function getShow(name) {
 }
 
 client.login(process.env.TOKEN); //login bot using token
-client.login(config.TOKEN); //login bot using token
