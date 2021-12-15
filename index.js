@@ -5,13 +5,8 @@ const axios = require('axios'); //import axios
 const {
     MessageEmbed
 } = require('discord.js');
-const {
-    Client,
-    Intents
-} = require('discord.js'); //create discord client
-const client = new Client({
-    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
-});
+const {Client,Intents} = require('discord.js'); //create discord client
+const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});
 
 client.on('ready', () => {
     console.info(`Logged in as ${client.user.tag}!`);
@@ -74,7 +69,7 @@ async function getInfo(name) {
 }
 
 async function getGif(name) {
-    const res = await axios.get(`https://g.tenor.com/v1/search?q=${name}&key=${process.env.TENORKEY}&contentfilter=high`)
+    const res = await axios.get(`https://g.tenor.com/v1/search?q=${name}&key=${config.TENORKEY}&contentfilter=high`)
     const index = Math.floor(Math.random() * res.data.results.length); //randomizes the gif
     return res.data.results[index.toString()].media['0'].gif.url;
 
@@ -133,4 +128,5 @@ async function getShow(name) {
     };
 }
 
-client.login(process.env.TOKEN); //login bot using token
+// client.login(process.env.TOKEN); //login bot using token
+client.login(config.TOKEN); //login bot using token

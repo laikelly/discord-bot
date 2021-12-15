@@ -19,7 +19,10 @@
   "homepage": "https://github.com/laikelly/discord-bot#readme",
   "dependencies": {
     "axios": "^0.24.0",
+    "config.json": "^0.0.4",
     "discord.js": "^13.3.1",
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "latest": "^0.2.0",
+    "n": "^8.0.1"
   }
 }
