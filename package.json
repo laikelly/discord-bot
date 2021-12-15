@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "worker": "node index.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
     "url": "https://github.com/laikelly/discord-bot/issues"
   },
   "homepage": "https://github.com/laikelly/discord-bot#readme",
+  "keywords": ["example","heroku"],
   "dependencies": {
     "axios": "^0.24.0",
     "config.json": "^0.0.4",
@@ -28,5 +29,5 @@
     "latest": "^0.2.0",
     "n": "^8.0.1",
     "node-fetch": "^3.1.0"
-  }
+}
 }
