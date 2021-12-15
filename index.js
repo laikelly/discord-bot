@@ -128,5 +128,5 @@ async function getShow(name) {
     };
 }
 
-// client.login(process.env.TOKEN); //login bot using token
+client.login(process.env.TOKEN); //login bot using token
 client.login(config.TOKEN); //login bot using token
