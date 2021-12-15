@@ -2,9 +2,7 @@ require('dotenv').config(); //initialize dotenv
 const Discord = require('discord.js'); //import discord.js
 const axios = require('axios'); //import axios
 
-const {
-    MessageEmbed
-} = require('discord.js');
+const {MessageEmbed} = require('discord.js');
 const {Client,Intents} = require('discord.js'); //create discord client
 const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});
 
