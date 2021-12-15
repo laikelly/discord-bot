@@ -67,7 +67,7 @@ async function getInfo(name) {
 }
 
 async function getGif(name) {
-    const res = await axios.get(`https://g.tenor.com/v1/search?q=${name}&key=${config.TENORKEY}&contentfilter=high`)
+    const res = await axios.get(`https://g.tenor.com/v1/search?q=${name}&key=${process.env.TENORKEY}&contentfilter=high`)
     const index = Math.floor(Math.random() * res.data.results.length); //randomizes the gif
     return res.data.results[index.toString()].media['0'].gif.url;
 
