@@ -228,7 +228,7 @@ async function getShow(name) {
     6. *Click on manual deploy if needed*
      
 ## Final Result
-<iframe src="https://giphy.com/embed/pbYIHI18CYQxv0tfZJ" width="480" height="330" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/pbYIHI18CYQxv0tfZJ">via GIPHY</a></p>
+https://giphy.com/embed/pbYIHI18CYQxv0tfZJ
 
 ## Resources
 * [bot setup](https://buddy.works/tutorials/how-to-build-a-discord-bot-in-node-js-for-beginners)
