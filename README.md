@@ -212,7 +212,8 @@ async function getShow(name) {
 * Problem deploying bot on Heroku
     1. Add ```"start": "node index.js"``` in the scripts section of package.json
     2. Update the node version on Heroku by adding code below to package.json
-    ```"engines":{
+    ```
+    "engines":{
              "node":"16.3"
         }
     ```
