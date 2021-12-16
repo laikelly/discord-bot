@@ -70,7 +70,7 @@ client.on('ready', () => {
 //make sure this is the last line
 client.login(process.env.TOKEN); //login bot using token
 ```
-* Create an .env file and store the token in there. In the .env file: ([**Remember to hide the .env file on github**](https://stackoverflow.com/questions/1139762/ignore-files-that-have-already-been-committed-to-a-git-repository/1139797#1139797)
+* Create an .env file and store the token in there. In the .env file: (**Remember to [hide the .env file on github**](https://stackoverflow.com/questions/1139762/ignore-files-that-have-already-been-committed-to-a-git-repository/1139797#1139797))
 ```
 TOKEN='your token here'
 ```
@@ -210,23 +210,29 @@ async function getShow(name) {
     * JSON: keys required string as the index and I did not log high enough in the chain of objects
     * The working code: ```res.data.results['0'].media['0'].gif.url```
 * Problem deploying bot on Heroku
-    * 1. Add ```"start": "node index.js"``` in the scripts section of package.json
-    * 2. Update the node version on Heroku by adding code below to package.json
+![herokuerror](https://user-images.githubusercontent.com/44072717/146304849-59f9c316-bfe4-4a9f-b353-205843e3d850.png)
+    1. Add ```"start": "node index.js"``` in the scripts section of package.json
+    2. Update the node version on Heroku by adding code below to package.json
     ```"engines":{
              "node":"16.3"
         }
     ```
-    * 3. Create a Procfile with the following: ```worker: npm start```
-    * 4. Change from Web to Worker on Heroku under "Resources"
+    3. Create a Procfile with the following: ```worker: npm start```
+        * [stackoverflow](https://stackoverflow.com/questions/51483462/heroku-discord-bot-is-offline)
+    4. Change from Web to Worker on Heroku under "Resources"
     <img width="1115" alt="Screen Shot 2021-12-15 at 10 20 52 PM" src="https://user-images.githubusercontent.com/44072717/146302996-7677df76-2bd4-45cf-9870-74906fb3f54b.png">
-    * 5. Upload the Config Tokens on Heruku under "Settings"
-    * <img width="599" alt="Screen Shot 2021-12-15 at 10 21 03 PM" src="https://user-images.githubusercontent.com/44072717/146303064-efc5ba25-c8ee-44d7-9c43-1a0c16939a7d.png">
-    * 6. *Click on manual deploy if needed*
+    5. Upload the Config Tokens on Heruku under "Settings"
+    <img width="599" alt="Screen Shot 2021-12-15 at 10 21 03 PM" src="https://user-images.githubusercontent.com/44072717/146303064-efc5ba25-c8ee-44d7-9c43-1a0c16939a7d.png">
+    6. *Click on manual deploy if needed*
      
 ## Final Result
 
 
 ## Resources
-Resources used in the coding process
 * [bot setup](https://buddy.works/tutorials/how-to-build-a-discord-bot-in-node-js-for-beginners)
+* [discord embeds](https://discordjs.guide/popular-topics/embeds.html#embed-preview)
+### Youtube
 * [implementing axios](https://www.youtube.com/watch?v=fQqkaQSc8dI)
+* [using tenor gif api](https://www.youtube.com/watch?v=9P1rB2MY4ZA)
+### Heroku
+* [updating node version](https://devcenter.heroku.com/articles/nodejs-support#specifying-a-node-js-version) 
