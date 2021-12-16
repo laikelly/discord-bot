@@ -78,7 +78,7 @@ TOKEN='your token here'
 ```
 node index.js
 ```
-** Step 7: Creating bot commands
+### Step 7: Creating bot commands
 ```
 client.on('messageCreate', async msg => {
     if (msg.content === "!help") {
@@ -119,7 +119,7 @@ client.on('messageCreate', async msg => {
     }
 });
 ```
-** Step 8: Creating async functions and using axios to retrieve data from API
+### Step 8: Creating async functions and using axios to retrieve data from API
 ```
 async function getInfo(name) {
     const res = await axios.get(`https://api.tvmaze.com/search/people?q=${name}`);
