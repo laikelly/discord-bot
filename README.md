@@ -6,12 +6,9 @@ This is a discord bot that returns information retrieved from the [TVmaze API](h
 
 ### Functionalities/Commands
 * !help - returns a list of commands and its functionalities
-<img width="503" alt="Screen Shot 2021-12-05 at 4 56 07 PM" src="https://user-images.githubusercontent.com/44072717/144765475-81aae515-c823-42fa-a8a8-82ea4a3c9d99.png">
-* !info - prompts the user to enter a name and returns personal information of the Actor/Actress user entered
-<img width="690" alt="Screen Shot 2021-12-05 at 5 05 00 PM" src="https://user-images.githubusercontent.com/44072717/144765718-66a6eb7a-ae8c-4dcb-ae2a-ebdad595f360.png">
-
-#### Example:
-<img width="529" alt="Screen Shot 2021-12-05 at 5 05 08 PM" src="https://user-images.githubusercontent.com/44072717/144765720-1b38623b-9515-410a-9ee1-316fd59ac4b5.png">
+* !info - returns Actor/Actress personal information
+* !gif - returns a random gif of Actor/Actress
+* !search - returns information on a show
 
 ## Procedure
 ### Step 1: Setting up a Discord server
@@ -73,14 +70,161 @@ client.on('ready', () => {
 //make sure this is the last line
 client.login(process.env.TOKEN); //login bot using token
 ```
-* Create an .env file and store the token in there. In the .env file:
+* Create an .env file and store the token in there. In the .env file: ([**Remember to hide the .env file on github**](https://stackoverflow.com/questions/1139762/ignore-files-that-have-already-been-committed-to-a-git-repository/1139797#1139797)
 ```
 TOKEN='your token here'
 ```
-* Run the following command for the bot to go online:
+* Run the following command for the bot to go online(locally):
 ```
 node index.js
 ```
+** Step 7: Creating bot commands
+```
+client.on('messageCreate', async msg => {
+    if (msg.content === "!help") {
+        const des = new MessageEmbed()
+            .setColor(`#bee2e7`)
+            .setDescription(`Below are the list of commands and functionalities:
+                        *Format: ![command] [search term separated by spaces]*
+
+                        **!info** - returns Actor/Actress personal information
+                        **!gif** - returns a random gif of the Actor/Actress
+                        **!search** - returns information on a show`)
+            .setTitle(`AI - Bot`)
+        msg.channel.send({
+            embeds: [des]
+        });
+    }
+    let tokens = msg.content.split(" ");
+    if (tokens[0] === "!info") {
+        let keywords = " ";
+        if (tokens.length > 1) {
+            keywords = tokens.slice(1, tokens.length).join("+");
+            msg.channel.send(await getInfo(keywords));
+        }
+    }
+    else if (tokens[0] === "!gif") {
+        let keywords = " ";
+        if (tokens.length > 1) {
+            keywords = tokens.slice(1, tokens.length).join(" ");
+            msg.channel.send(await getGif(keywords));
+        }
+    }
+    else if (tokens[0] === "!search") {
+        let keywords = " ";
+        if (tokens.length > 1) {
+            keywords = tokens.slice(1, tokens.length).join("+");
+            msg.channel.send(await getShow(keywords));
+        }
+    }
+});
+```
+** Step 8: Creating async functions and using axios to retrieve data from API
+```
+async function getInfo(name) {
+    const res = await axios.get(`https://api.tvmaze.com/search/people?q=${name}`);
+    const info = new MessageEmbed()
+        .setColor(`#bee2e7`)
+        .setAuthor('Actor/Actress Personal Information')
+        .setTitle(`${res.data[0].person.name}`)
+        .setURL(`${res.data[0].person.url}`)
+        .setDescription(`**Gender:** ${res.data[0].person.gender}
+        **Birthday:** ${res.data[0].person.birthday}
+        **Born in:** ${res.data[0].person.country.name}`)
+        .setThumbnail(`${res.data[0].person.image.medium}`)
+        .setTimestamp()
+    return {
+        embeds: [info]
+    };
+}
+
+async function getGif(name) {
+    const res = await axios.get(`https://g.tenor.com/v1/search?q=${name}&key=${process.env.TENORKEY}&contentfilter=high`)
+    const index = Math.floor(Math.random() * res.data.results.length); //randomizes the gif
+    return res.data.results[index.toString()].media['0'].gif.url;
+
+}
+
+async function getShow(name) {
+    const res = await axios.get(`https://api.tvmaze.com/singlesearch/shows?q=${name}`);
+    //checking for null values
+    var genres = res.data.genres;
+    if (genres.length == 0){
+        genres = 'N/A';
+    }
+    var rating = res.data.rating.average;
+    if (rating === null){
+        rating = 'N/A';
+    }
+    var dateStart = res.data.premiered;
+    if (dateStart === null){
+        dateStart = 'N/A';
+    }
+    var dateEnd = res.data.ended;
+    if (dateEnd === null){
+        dateEnd = 'N/A';
+    }
+    var summary = res.data.summary;
+    if (summary === null){
+        summary = 'Summary Not Available';
+    }
+    else{
+        summary = summary.match(/<p>(.*?)<\/p>/g).map(function(val) { //removes the <p></p> tags
+            return val.replace(/<\/?p>/g, '');
+        });
+    }
+    var thumbnail = res.data.image;
+    if (thumbnail === null){
+        thumbnail = 'https://westsiderc.org/wp-content/uploads/2019/08/Image-Not-Available.png'
+    }
+    else{
+        thumbnail = res.data.image.medium;
+    }
+    const info = new MessageEmbed()
+        .setColor(`#bee2e7`)
+        .setAuthor('Show Information')
+        .setTitle(`${res.data.name}`)
+        .setURL(`${res.data.url}`)
+        .setDescription(`**Language:** ${res.data.language}
+            **Genres:** ${genres}
+            **Rated:** ${rating}
+            **Released:** ${dateStart} to ${dateEnd}
+            **Summary:** ${summary}
+            `)
+        .setThumbnail(`${thumbnail}`)
+        .setTimestamp()
+    return {
+        embeds: [info]
+    };
+}
+```
+
+## Issues Encountered + Solution
+* Getting ```TypeError('CLIENT_MISSING_INTENTS');``` errors
+    * Turns out I was not using the latest discord.js and node version while I was building my bot and using the wrong syntax to create a new client
+    * [stackoverflow](https://stackoverflow.com/questions/68701446/discord-api-valid-intents-must-be-provided-for-the-client)
+* Discord embeds not showing up
+    * I was using the older syntax for embeds
+    * [stackoverflow](https://stackoverflow.com/questions/63095161/discord-js-referenceerror-embed-is-not-defined) 
+* Not being able to retrieve gif url from Tenor gif api
+    * JSON: keys required string as the index and I did not log high enough in the chain of objects
+    * The working code: ```res.data.results['0'].media['0'].gif.url```
+* Problem deploying bot on Heroku
+    * 1. Add ```"start": "node index.js"``` in the scripts section of package.json
+    * 2. Update the node version on Heroku by adding code below to package.json
+    ```"engines":{
+             "node":"16.3"
+        }
+    ```
+    * 3. Create a Procfile with the following: ```worker: npm start```
+    * 4. Change from Web to Worker on Heroku under "Resources"
+    <img width="1115" alt="Screen Shot 2021-12-15 at 10 20 52 PM" src="https://user-images.githubusercontent.com/44072717/146302996-7677df76-2bd4-45cf-9870-74906fb3f54b.png">
+    * 5. Upload the Config Tokens on Heruku under "Settings"
+    * <img width="599" alt="Screen Shot 2021-12-15 at 10 21 03 PM" src="https://user-images.githubusercontent.com/44072717/146303064-efc5ba25-c8ee-44d7-9c43-1a0c16939a7d.png">
+    * 6. *Click on manual deploy if needed*
+     
+## Final Result
+
 
 ## Resources
 Resources used in the coding process
