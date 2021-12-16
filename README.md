@@ -228,7 +228,7 @@ async function getShow(name) {
     6. *Click on manual deploy if needed*
      
 ## Final Result
-https://giphy.com/embed/pbYIHI18CYQxv0tfZJ
+![discord_bot](https://user-images.githubusercontent.com/44072717/146307816-6f885bc5-bfe6-46ab-ab82-5634f939b40a.gif)
 
 ## Resources
 * [bot setup](https://buddy.works/tutorials/how-to-build-a-discord-bot-in-node-js-for-beginners)
