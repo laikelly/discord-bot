@@ -210,7 +210,6 @@ async function getShow(name) {
     * JSON: keys required string as the index and I did not log high enough in the chain of objects
     * The working code: ```res.data.results['0'].media['0'].gif.url```
 * Problem deploying bot on Heroku
-![herokuerror](https://user-images.githubusercontent.com/44072717/146304849-59f9c316-bfe4-4a9f-b353-205843e3d850.png)
     1. Add ```"start": "node index.js"``` in the scripts section of package.json
     2. Update the node version on Heroku by adding code below to package.json
     ```"engines":{
@@ -221,8 +220,10 @@ async function getShow(name) {
         * [stackoverflow](https://stackoverflow.com/questions/51483462/heroku-discord-bot-is-offline)
     4. Change from Web to Worker on Heroku under "Resources"
     <img width="1115" alt="Screen Shot 2021-12-15 at 10 20 52 PM" src="https://user-images.githubusercontent.com/44072717/146302996-7677df76-2bd4-45cf-9870-74906fb3f54b.png">
+    
     5. Upload the Config Tokens on Heruku under "Settings"
     <img width="599" alt="Screen Shot 2021-12-15 at 10 21 03 PM" src="https://user-images.githubusercontent.com/44072717/146303064-efc5ba25-c8ee-44d7-9c43-1a0c16939a7d.png">
+    
     6. *Click on manual deploy if needed*
      
 ## Final Result
