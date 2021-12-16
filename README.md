@@ -2,7 +2,7 @@
 [link to bot](https://discord.com/api/oauth2/authorize?client_id=911006634564796456&permissions=67584&scope=bot)
 
 ## Description
-This is a discord bot that returns information retrieved from the [TVmaze API](https://www.tvmaze.com/api)
+This is a discord bot that returns information retrieved from [TVmaze API](https://www.tvmaze.com/api) and [Tenor API](https://tenor.com/gifapi/documentation)
 
 ### Functionalities/Commands
 * !help - returns a list of commands and its functionalities
